@@ -180,8 +180,8 @@ trait ProductHandle
         }
         foreach ($types as $type) {
             $type->id = intval($type->id);
-            $type->hot = intval($type->hot);
-//            $type->is_hot = HotTypeList::where('type_id', '=', $type->id)->count();
+//            $type->hot = intval($type->hot);
+            $type->is_hot = HotTypeList::where('type_id', '=', $type->id)->count();
 //            $bind = ProductTypeBind::where('type_id', '=', $type->id)->first();
 //            if ($bind->parent_id == 0) {
 //                $type->level = 1;
