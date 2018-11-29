@@ -27,8 +27,7 @@ class ProductController extends Controller
         $id = $post->id?$post->id:0;
         $data = [
             'title'=>$post->title,
-            'logo'=>$post->logo?$post->logo:'',
-            'hot'=>$post->hot?$post->hot:0
+            'logo'=>$post->logo?$post->logo:''
         ];
         if ($this->handle->addProductType($id,$data)){
             return jsonResponse([
