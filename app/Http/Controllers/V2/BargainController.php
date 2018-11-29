@@ -36,18 +36,27 @@ class BargainController extends Controller
             'title'=>$post->title,
             'content'=>$post->intro
         ];
-        $stocks = $post->stocks;
+//        $stocks = $post->stocks;
+        $pictures = $post->pictures;
         $result = $this->handle->addBargainPromotion($id,$data);
         if ($result){
-            foreach ($stocks as $stock){
-                $swap = $this->handle->getStockById($stock['id']);
-                $swapData = [
-                    'origin_price'=>$swap->price,
-                    'min_price'=>$stock['price'],
+//            foreach ($stocks as $stock){
+//                $swap = $this->handle->getStockById($stock['id']);
+//                $swapData = [
+//                    'origin_price'=>$swap->price,
+//                    'min_price'=>$stock['price'],
+//                    'bargain_id'=>$result,
+//                    'stock_id'=>$stock['id']
+//                ];
+//                $this->handle->addBargainStock(0,$swapData);
+//            }
+            foreach ($pictures as $picture){
+                $pictureData = [
                     'bargain_id'=>$result,
-                    'stock_id'=>$stock['id']
+                    'href'=>$picture['href'],
+                    'sort'=>$picture['sort']?$picture['sort']:0
                 ];
-                $this->handle->addBargainStock(0,$swapData);
+                $this->handle->addBargainPicture(0,$pictureData);
             }
             return jsonResponse([
                 'msg'=>'ok'

@@ -10,6 +10,7 @@ namespace App\Modules\Bargain;
 
 
 use App\Modules\Bargain\Model\BargainList;
+use App\Modules\Bargain\Model\BargainPicture;
 use App\Modules\Bargain\Model\BargainPromotion;
 use App\Modules\Bargain\Model\BargainRecord;
 use App\Modules\Bargain\Model\BargainStock;
@@ -299,5 +300,32 @@ trait BargainHandle
     public function getBargainListById($id)
     {
         return BargainList::findOrFail($id);
+    }
+    public function addBargainPicture($id,$data)
+    {
+        $picture = $id?BargainPicture::find($id):new BargainPicture();
+        foreach ($data as $key=>$value){
+            $picture->$key = $value;
+        }
+        if ($picture->save()){
+            return true;
+        }
+        return false;
+    }
+    public function delBargainPicture($id)
+    {
+        return BargainPicture::find($id)->delete();
+    }
+    public function delBargainPictures($bargain_id)
+    {
+        return BargainPicture::where('bargain_id','=',$bargain_id)->delete();
+    }
+    public function getBargainPictures($bargain_id,$sort=0)
+    {
+        $db = DB::table('bargain_pictures')->where('bargain_id','=',$bargain_id);
+        if ($sort){
+            $db->orderBy('sort','DESC');
+        }
+        return $db->get();
     }
 }
