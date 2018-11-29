@@ -19,6 +19,7 @@ class CheckPermission
      */
     public function handle($request, Closure $next,$permission)
     {
+        return $next($request);
         $role_id = RoleUser::where('user_id','=',Auth::id())->pluck('role_id')->first();
         $name = explode('|',$permission);
         $permissionId = Permission::whereIn('name',$name)->pluck('id')->toArray();
