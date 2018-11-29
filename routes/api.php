@@ -21,7 +21,7 @@ Route::post('member/notify','V2\MemberController@memberNotify');
 Route::group(['prefix'=>'v1'],function (){
     Route::post('login','V1\WeChatController@login');
     Route::get('test','V1\WeChatController@test');
-    Route::get('product/types','V1\ProductController@getProductTypesTree');
+    Route::get('product/types','V1\ProductController@getProductTypes');
     Route::get('product/types/parents','V1\ProductController@getProductTypesParents');
     Route::get('product/types/tree','V1\ProductController@getProductTypesTreeByParent');
     Route::get('documents','V1\SystemController@getDocuments');
