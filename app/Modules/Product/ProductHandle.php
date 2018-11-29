@@ -76,36 +76,12 @@ trait ProductHandle
         return $dbObj->pluck('id')->toArray();
     }
 
-    public function getProductTypes($page = 1, $limit = 10, $title = '', $level = 0, $parent = 0, $store_id = 0)
+    public function getProductTypes($page = 1, $limit = 10, $title = '')
     {
         $dbObj = DB::table('product_types');
-        if ($store_id) {
-
-        }
         if ($title) {
 //            dd($title);
             $dbObj->where('title', 'like', '%' . $title . '%');
-        }
-        if ($parent) {
-            $idArr = ProductTypeBind::where('parent_id', '=', $parent)->pluck('type_id')->toArray();
-            $dbObj->whereIn('id', $idArr);
-        }
-        if ($level) {
-            switch ($level) {
-                case 1:
-                    $idArr = ProductTypeBind::where('parent_id', '=', 0)->pluck('type_id')->toArray();
-                    break;
-                case 2:
-                    $swap = ProductTypeBind::where('parent_id', '=', 0)->pluck('type_id')->toArray();
-                    $idArr = ProductTypeBind::whereIn('parent_id', $swap)->pluck('type_id')->toArray();
-                    break;
-                case 3:
-                    $swap = ProductTypeBind::where('parent_id', '=', 0)->pluck('type_id')->toArray();
-                    $swap = ProductTypeBind::whereIn('parent_id', $swap)->pluck('type_id')->toArray();
-                    $idArr = ProductTypeBind::whereIn('parent_id', $swap)->pluck('type_id')->toArray();
-                    break;
-            }
-            $dbObj->whereIn('id', $idArr);
         }
         $count = $dbObj->count();
         $types = $dbObj->limit($limit)->offset(($page - 1) * $limit)->get();

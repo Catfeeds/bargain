@@ -43,10 +43,8 @@ class ProductController extends Controller
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
         $title = Input::get('title');
-        $level = Input::get('level',0);
-        $parent = Input::get('parent',0);
-        $types = $this->handle->getProductTypes($page,$limit,$title,$level,$parent);
-        $this->handle->formatProductTypes($types['data']);
+        $types = $this->handle->getProductTypes($page,$limit,$title);
+//        $this->handle->formatProductTypes($types['data']);
         return response()->json([
             'msg'=>'ok',
             'data'=>$types
