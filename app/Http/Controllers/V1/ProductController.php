@@ -46,7 +46,7 @@ class ProductController extends Controller
         $title = Input::get('title');
         $hot = Input::get('hot',0);
         $types = $this->handle->getProductTypes($page,$limit,$title,$hot);
-//        $this->handle->formatProductTypes($types['data']);
+        $this->handle->formatProductTypes($types['data']);
         return response()->json([
             'msg'=>'ok',
             'data'=>$types
