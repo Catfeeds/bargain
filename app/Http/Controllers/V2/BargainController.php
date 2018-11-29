@@ -32,7 +32,9 @@ class BargainController extends Controller
             //'end'=>strtotime($post->end),
             'time'=>$post->time,
             'description'=>$post->description,
-            'number'=>$post->number
+            'number'=>$post->number,
+            'title'=>$post->title,
+            'content'=>$post->intro
         ];
         $stocks = $post->stocks;
         $result = $this->handle->addBargainPromotion($id,$data);

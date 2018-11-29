@@ -20,7 +20,7 @@ class CreateBargainPromotionsTable extends Migration
             $table->integer('read_num')->default(0);
             $table->integer('bargain_num')->default(0);
             $table->string('title');
-            $table->text('content');
+            $table->text('intro');
             //$table->unsignedInteger('stock_id');
             //$table->float('min_price',10,2);
             //$table->float('origin_price',10,2);
