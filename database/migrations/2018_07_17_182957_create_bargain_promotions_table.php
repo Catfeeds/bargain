@@ -33,6 +33,7 @@ class CreateBargainPromotionsTable extends Migration
             $table->tinyInteger('hot')->default(0);
             $table->tinyInteger('state')->default(1);
             $table->tinyInteger('enable')->default(0);
+            $table->unsignedInteger('type_id')->default(0);
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ class BargainController extends Controller
             'clickNum'=>$post->clickNum,
             //'start'=>strtotime($post->start),
             //'end'=>strtotime($post->end),
+            'type_id'=>$post->type_id,
             'time'=>$post->time,
             'description'=>$post->description,
             'number'=>$post->number,
