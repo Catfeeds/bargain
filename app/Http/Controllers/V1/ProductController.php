@@ -25,12 +25,11 @@ class ProductController extends Controller
     public function createProductType(ProductTypePost $post)
     {
         $id = $post->id?$post->id:0;
-        $parent = $post->parent?$post->parent:0;
         $data = [
             'title'=>$post->title,
             'logo'=>$post->logo?$post->logo:''
         ];
-        if ($this->handle->addProductType($id,$data,$parent)){
+        if ($this->handle->addProductType($id,$data)){
             return jsonResponse([
                 'msg'=>'ok'
             ]);

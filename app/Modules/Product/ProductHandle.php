@@ -36,11 +36,8 @@ use Illuminate\Support\Facades\DB;
 
 trait ProductHandle
 {
-    public function addProductType($id = 0, $data, $parent = 0)
+    public function addProductType($id = 0, $data)
     {
-        if ($id != 0 && $id == $parent) {
-            return false;
-        }
         if ($id) {
             $type = ProductType::find($id);
         } else {
@@ -50,11 +47,6 @@ trait ProductHandle
             $type->$key = $value;
         }
         if ($type->save()) {
-            ProductTypeBind::where('type_id', '=', $type->id)->delete();
-            $bind = new ProductTypeBind();
-            $bind->type_id = $type->id;
-            $bind->parent_id = $parent;
-            $bind->save();
             return true;
         }
         return false;
