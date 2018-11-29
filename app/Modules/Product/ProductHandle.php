@@ -76,12 +76,15 @@ trait ProductHandle
         return $dbObj->pluck('id')->toArray();
     }
 
-    public function getProductTypes($page = 1, $limit = 10, $title = '')
+    public function getProductTypes($page = 1, $limit = 10, $title = '',$hot = 0)
     {
         $dbObj = DB::table('product_types');
         if ($title) {
 //            dd($title);
             $dbObj->where('title', 'like', '%' . $title . '%');
+        }
+        if ($hot){
+            $dbObj->where('hot', '=', $hot-1);
         }
         $count = $dbObj->count();
         $types = $dbObj->limit($limit)->offset(($page - 1) * $limit)->get();

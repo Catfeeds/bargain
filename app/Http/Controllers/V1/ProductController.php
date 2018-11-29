@@ -27,7 +27,8 @@ class ProductController extends Controller
         $id = $post->id?$post->id:0;
         $data = [
             'title'=>$post->title,
-            'logo'=>$post->logo?$post->logo:''
+            'logo'=>$post->logo?$post->logo:'',
+            'hot'=>$post->hot?$post->hot:0
         ];
         if ($this->handle->addProductType($id,$data)){
             return jsonResponse([
@@ -43,7 +44,8 @@ class ProductController extends Controller
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
         $title = Input::get('title');
-        $types = $this->handle->getProductTypes($page,$limit,$title);
+        $hot = Input::get('hot',0);
+        $types = $this->handle->getProductTypes($page,$limit,$title,$hot);
 //        $this->handle->formatProductTypes($types['data']);
         return response()->json([
             'msg'=>'ok',

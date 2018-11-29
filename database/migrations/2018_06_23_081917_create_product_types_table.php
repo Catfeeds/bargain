@@ -17,6 +17,7 @@ class CreateProductTypesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('logo')->nullable();
+            $table->tinyInteger('hot')->default(0);
             $table->timestamps();
         });
     }
