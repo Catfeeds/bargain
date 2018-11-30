@@ -129,10 +129,10 @@ class BargainController extends Controller
     {
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
-        $hot = Input::get('hot',0);
+        $type_id = Input::get('type_id',0);
         $user_id = getRedisData(Input::get('token'));
-        $data = $this->handle->getBargainPromotions(null,0,0,$page,$limit,2,$hot);
-        $this->handle->formatBargainPromotions($data['data'],1,$user_id);
+        $data = $this->handle->getBargainPromotions(null,0,0,$page,$limit,2,$type_id);
+        $this->handle->formatBargainPromotions($data['data']);
         return jsonResponse([
             'msg'=>'ok',
             'data'=>$data
