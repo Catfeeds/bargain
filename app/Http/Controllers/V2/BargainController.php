@@ -56,7 +56,7 @@ class BargainController extends Controller
                 $pictureData = [
                     'bargain_id'=>$result,
                     'href'=>$picture['href'],
-                    'sort'=>$picture['sort']?$picture['sort']:0
+                    'sort'=>isset($picture['sort'])?$picture['sort']:0
                 ];
                 $this->handle->addBargainPicture(0,$pictureData);
             }
