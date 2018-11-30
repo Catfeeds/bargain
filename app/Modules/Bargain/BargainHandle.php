@@ -38,7 +38,7 @@ trait BargainHandle
         }
         return false;
     }
-    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$hot=0)
+    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0)
     {
         $DB = DB::table('bargain_promotions');
         if (!empty($product_id)){
@@ -47,14 +47,14 @@ trait BargainHandle
         if ($store_id){
             $DB->where('store_id','=',$store_id);
         }
+        if ($type_id){
+            $DB->where('type_id','=',$type_id);
+        }
         if ($state){
             $DB->where('state','=',$state);
         }
         if ($enable){
             $DB->where('enable','=',$enable-1);
-        }
-        if ($hot){
-            $DB->where('hot','=',$hot-1);
         }
         $count = $DB->count();
         $data = $DB->orderBy('id','DESC')->limit($limit)->offset(($page-1)*$limit)->get();
@@ -70,28 +70,29 @@ trait BargainHandle
             return [];
         }
         foreach ($promotions as $promotion){
-            $product = Product::find($promotion->product_id);
-            if (!empty($product)){
-                unset($product->detail);
-            }
-            $promotion->product = $product;
-            $stocks = BargainStock::where('bargain_id','=',$promotion->id)->orderBy('origin_price','ASC')->get();
-            if (!empty($stocks)){
-                foreach ($stocks as $stock){
-                    $stock->origin_price = number_format($stock->origin_price,2);
-                    $stock->min_price = number_format($stock->min_price,2);
-                    if ($formatStock){
-                        $stock->info = Stock::find($stock->stock_id);
-                    }
-                }
-            }
-            $promotion->stocks = $stocks;
-            $promotion->bargain_count = $this->getBargainCount($promotion->id);
-            $promotion->bargain_price = $this->getBargainPromotionPrice($promotion->id);
-            $promotion->count = BargainList::where('promotion_id','=',$promotion->id)->count();
-            if ($user_id){
-                $promotion->join = BargainList::where('promotion_id','=',$promotion->id)->where('user_id','=',$user_id)->first();
-            }
+            $promotion->pictures = $this->getBargainPictures($promotion->id);
+//            $product = Product::find($promotion->product_id);
+//            if (!empty($product)){
+//                unset($product->detail);
+//            }
+//            $promotion->product = $product;
+//            $stocks = BargainStock::where('bargain_id','=',$promotion->id)->orderBy('origin_price','ASC')->get();
+//            if (!empty($stocks)){
+//                foreach ($stocks as $stock){
+//                    $stock->origin_price = number_format($stock->origin_price,2);
+//                    $stock->min_price = number_format($stock->min_price,2);
+//                    if ($formatStock){
+//                        $stock->info = Stock::find($stock->stock_id);
+//                    }
+//                }
+//            }
+//            $promotion->stocks = $stocks;
+//            $promotion->bargain_count = $this->getBargainCount($promotion->id);
+//            $promotion->bargain_price = $this->getBargainPromotionPrice($promotion->id);
+//            $promotion->count = BargainList::where('promotion_id','=',$promotion->id)->count();
+//            if ($user_id){
+//                $promotion->join = BargainList::where('promotion_id','=',$promotion->id)->where('user_id','=',$user_id)->first();
+//            }
         }
         return $promotions;
     }
