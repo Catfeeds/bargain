@@ -19,11 +19,10 @@ class BargainController extends Controller
 
     public function createBargain(Request $post)
     {
-        $product = $this->handle->getProductById($post->product_id);
+//        $product = $this->handle->getProductById($post->product_id);
         $id = $post->id?$post->id:0;
         $data = [
-            'store_id'=>$product->store_id,
-            'product_id'=>$product->id,
+            'store_id'=>getStoreId(),
             //'stock_id'=>$stock->id,
             //'min_price'=>$post->min_price,
             //'origin_price'=>$post->origin_price,
