@@ -103,22 +103,23 @@ trait BargainHandle
     }
     public function formatBargainPromotion(&$promotion,$time=0,$bargain=0,$join=0,$express=0)
     {
-        $promotion->product = Product::find($promotion->product_id);
-        $stocks = BargainStock::where('bargain_id','=',$promotion->id)->get();
-        if (!empty($stocks)){
-            foreach ($stocks as $stock){
-                $stock->origin_price = number_format($stock->origin_price,2);
-                $stock->min_price = number_format($stock->min_price,2);
-                $stock->info = Stock::find($stock->stock_id);
-            }
-        }
+//        $promotion->product = Product::find($promotion->product_id);
+//        $stocks = BargainStock::where('bargain_id','=',$promotion->id)->get();
+//        if (!empty($stocks)){
+//            foreach ($stocks as $stock){
+//                $stock->origin_price = number_format($stock->origin_price,2);
+//                $stock->min_price = number_format($stock->min_price,2);
+//                $stock->info = Stock::find($stock->stock_id);
+//            }
+//        }
         if ($join){
             $promotion->join = BargainList::where('promotion_id','=',$promotion->id)->where('user_id','=',$join)->first();
         }
         if ($express){
             $promotion->express = StoreExpress::where('store_id','=',$promotion->store_id)->first();
         }
-        $promotion->stocks = $stocks;
+        $promotion->picture = BargainPicture::where('bargain_id','=',$promotion->id)->get();
+//        $promotion->stocks = $stocks;
         $promotion->bargain = $bargain;
     }
     public function addBargainRecord($user_id,$promotion_id,$price)
