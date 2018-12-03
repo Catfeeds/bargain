@@ -212,25 +212,25 @@ class BargainController extends Controller
             ],298);
         }
 
-        $stock = $this->handle->getBargainStock($list->promotion_id,$list->stock_id);
-        if (empty($stock)){
-            return jsonResponse([
-                'msg'=>'该库存不存在！'
-            ],400);
-        }
+//        $stock = $this->handle->getBargainStock($list->promotion_id,$list->stock_id);
+//        if (empty($stock)){
+//            return jsonResponse([
+//                'msg'=>'该库存不存在！'
+//            ],400);
+//        }
         $swapPrice = $this->handle->getBargainPromotionPrice($promotion_id);
-        if($stock->origin_price-$swapPrice<=$stock->min_price){
+        if($promotion->origin_price-$swapPrice<=$promotion->min_price){
             return jsonResponse([
                 'msg'=>'砍价已结束！'
             ],299);
         }
-        $price = $this->handle->getBargainPrice($promotion->clickNum-$count,$stock->origin_price-$stock->min_price-$swapPrice);
+        $price = $this->handle->getBargainPrice($promotion->clickNum-$count,$promotion->origin_price-$promotion->min_price-$swapPrice);
         if ($this->handle->addBargainRecord($user_id,$promotion_id,$price)){
             $this->handle->addBargainCount($promotion_id,$count+1);
             return jsonResponse([
                 'msg'=>'ok',
                 'data'=>[
-                    'price'=>sprintf('%.2f',$stock->origin_price-$price),
+                    'price'=>sprintf('%.2f',$promotion->origin_price-$price),
                     'count'=>$count+1,
                     'bargain_price'=>sprintf('%.2f',$price)
                 ]
