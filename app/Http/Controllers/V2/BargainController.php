@@ -36,7 +36,7 @@ class BargainController extends Controller
             'title'=>$post->title,
             'intro'=>$post->intro,
             'origin_price'=>$post->origin_price,
-            'price'=>$post->price
+            'min_price'=>$post->min_price
         ];
 //        $stocks = $post->stocks;
         $pictures = $post->pictures;
