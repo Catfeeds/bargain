@@ -123,18 +123,18 @@ class OrderController extends Controller
                 }
                 $promotion = $this->handle->getBargainPromotion($bargain_promotion);
                 $expressPrice = 0 ;
-                if ($express){
-                    $storeExpress = $this->handle->getStoreExpress($promotion->store_id);
-                    $expressPrice = $storeExpress->price;
-                }
-                $list = $this->handle->getBargainListById($list_id);
+//                if ($express){
+//                    $storeExpress = $this->handle->getStoreExpress($promotion->store_id);
+//                    $expressPrice = $storeExpress->price;
+//                }
+//                $list = $this->handle->getBargainListById($list_id);
                 if ($promotion->number==0){
                     throw new \Exception('已无库存');
                 }
-                $stock = $this->handle->getStockById($list->stock_id);
-                $product = $this->handle->getProductById($stock->product_id);
-                $bargainStock = $this->handle->getBargainStock($bargain_promotion,$list->stock_id);
-                $price = $bargainStock->origin_price - $this->handle->getBargainPromotionPrice($list_id) + $expressPrice;
+//                $stock = $this->handle->getStockById($list->stock_id);
+//                $product = $this->handle->getProductById($stock->product_id);
+//                $bargainStock = $this->handle->getBargainStock($bargain_promotion,$list->stock_id);
+                $price = $promotion->origin_price - $this->handle->getBargainPromotionPrice($list_id) + $expressPrice;
                 $state = $price==0?'paid':'created';
 //                if ($price<$promotion->min_price){
 //                    throw new \Exception('非法价格！');
@@ -145,47 +145,71 @@ class OrderController extends Controller
                     'price' => $price,
                     'state' => $state,
                     'group_number' => $groupNumber,
-                    'store_id' => $product->store_id,
+                    'store_id' => $promotion->store_id,
                     'delivery'=>$express
                 ];
                 $order_id = $this->handle->addOrder(0, $data);
                 if ($order_id) {
-                    $addressSnapshot = [
-                        'name' => $address->name,
-                        'phone' => $address->phone,
-                        'address' => $address->city . $address->address,
-                        'zip_code' => $address->zip_code
-                    ];
+//                    $addressSnapshot = [
+//                        'name' => $address->name,
+//                        'phone' => $address->phone,
+//                        'address' => $address->city . $address->address,
+//                        'zip_code' => $address->zip_code
+//                    ];
                     $orderType = [
                         'order_id'=>$order_id,
                         'type'=>'bargain',
                         'promotion_id'=>$bargain_promotion
                     ];
-                    $this->handle->addOrderType(0,$orderType);
-                    if ($this->handle->addAddressSnapshot($order_id, $addressSnapshot)) {
-                        $swapStock = $this->handle->getStockById($stock->id);
-                        $product = $this->handle->getProductById($swapStock->product_id);
-                        if ($product->norm == 'fixed') {
-                            $detail = 'fixed';
-                        } else {
-                            $detail = explode(',', $swapStock->product_detail);
-                            $detail = ProductDetailSnapshot::whereIn('id', $detail)->pluck('title')->toArray();
-                            $detail = implode(' ', $detail);
-                        }
+                    if ($this->handle->addOrderType(0,$orderType)){
+                        $pictures = $this->handle->getBargainPictures($bargain_promotion);
+//                        $swapStock = $this->handle->getStockById($stock->id);
+//                        $product = $this->handle->getProductById($swapStock->product_id);
+//                        if ($product->norm == 'fixed') {
+//                            $detail = 'fixed';
+//                        } else {
+//                            $detail = explode(',', $swapStock->product_detail);
+//                            $detail = ProductDetailSnapshot::whereIn('id', $detail)->pluck('title')->toArray();
+//                            $detail = implode(' ', $detail);
+//                        }
                         $stockData = [
-                            'product_id' => $swapStock->product_id,
-                            'stock_id' => $swapStock->id,
-                            'store_id' => $product->store_id,
-                            'cover' => $swapStock->cover,
-                            'name' => $product->name,
-                            'detail' => $detail,
+                            'product_id' => 0,
+                            'stock_id' => 0,
+                            'store_id' => $promotion->store_id,
+                            'cover' => count($pictures)!=0?$pictures[0]:'',
+                            'name' => $promotion->title,
+                            'detail' => '',
                             'price' => $price,
                             'number' => 1,
-                            'product'=>$product->name
+                            'product'=>$promotion->title
                         ];
                         $this->handle->addStockSnapshot($order_id, $stockData);
                         $this->handle->addCardPrize($user_id,$card_promotion);
                     }
+//                    if ($this->handle->addAddressSnapshot($order_id, $addressSnapshot)) {
+//                        $swapStock = $this->handle->getStockById($stock->id);
+//                        $product = $this->handle->getProductById($swapStock->product_id);
+//                        if ($product->norm == 'fixed') {
+//                            $detail = 'fixed';
+//                        } else {
+//                            $detail = explode(',', $swapStock->product_detail);
+//                            $detail = ProductDetailSnapshot::whereIn('id', $detail)->pluck('title')->toArray();
+//                            $detail = implode(' ', $detail);
+//                        }
+//                        $stockData = [
+//                            'product_id' => $swapStock->product_id,
+//                            'stock_id' => $swapStock->id,
+//                            'store_id' => $product->store_id,
+//                            'cover' => $swapStock->cover,
+//                            'name' => $product->name,
+//                            'detail' => $detail,
+//                            'price' => $price,
+//                            'number' => 1,
+//                            'product'=>$product->name
+//                        ];
+//                        $this->handle->addStockSnapshot($order_id, $stockData);
+//                        $this->handle->addCardPrize($user_id,$card_promotion);
+//                    }
                 }
                 DB::commit();
                 return jsonResponse([
