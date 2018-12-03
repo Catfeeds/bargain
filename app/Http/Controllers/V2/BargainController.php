@@ -333,7 +333,7 @@ class BargainController extends Controller
     {
         $user_id = getRedisData(Input::get('token'));
         $promotion_id = Input::get('promotion_id');
-        $stock_id = Input::get('stock_id');
+        $stock_id = Input::get('stock_id',0);
         $promotion = $this->handle->getBargainPromotion($promotion_id);
         $list = $this->handle->getBargainList($user_id,$promotion_id);
         if (!empty($list)){
