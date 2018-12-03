@@ -102,7 +102,10 @@ class StoreController extends Controller
     {
         $data = [
             'name'=>$post->name,
-            'manager'=>$post->manager
+            'manager'=>$post->manager,
+            'lat'=>$post->lat,
+            'lon'=>$post->lon,
+            'address'=>$post->address
         ];
         if ($this->handle->addStore(Auth::id(),$data)){
             setStoreId(Auth::id());

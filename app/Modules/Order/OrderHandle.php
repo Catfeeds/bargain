@@ -151,7 +151,10 @@ trait OrderHandle
             $data[$i]['score'] = ExchangeRecord::where('order_id','=',$orders[$i]['id'])->first();
             for ($k=0;$k<count($store);$k++){
 //                dd($store[$k]);
-                $data[$i]['shop'][$k]['shopname'] = Store::find($store[$k])->name;
+                $swapShop = Store::find($store[$k]);
+                $data[$i]['shop'][$k]['shopname'] = $swapShop->name;
+                $data[$i]['shop'][$k]['lat'] = $swapShop->lat;
+                $data[$i]['shop'][$k]['lon'] = $swapShop->lon;
                 $data[$i]['shop'][$k]['shopid'] = $store[$k];
                 $store_id = $store[$k];
 //                dd($snapshots)
