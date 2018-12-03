@@ -176,7 +176,7 @@ class OrderController extends Controller
                             'product_id' => 0,
                             'stock_id' => 0,
                             'store_id' => $promotion->store_id,
-                            'cover' => count($pictures)!=0?$pictures[0]:'',
+                            'cover' => count($pictures)!=0?$pictures[0]->href:'',
                             'name' => $promotion->title,
                             'detail' => '',
                             'price' => $price,
