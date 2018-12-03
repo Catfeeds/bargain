@@ -175,7 +175,4 @@ Route::group(['prefix'=>'v3','middleware'=>'cross'],function (){
     Route::get('prizes','V3\PrizeController@getPrizes');
     Route::post('prize','V3\PrizeController@addPrize');
     Route::delete('prize','V3\PrizeController@delPrize');
-
-    Route::get('order/qrcode','V3\OrderController@getOrderQrCode');
-    Route::get('order/confirm','V3\OrderController@confirmOrder');
 });
