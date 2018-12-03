@@ -181,13 +181,13 @@ class BargainController extends Controller
         $promotion_id = Input::get('list_id');
         $price = $this->handle->getBargainPromotionPrice($promotion_id);
         $count = $this->handle->getBargainCount($promotion_id);
-        $list = $this->handle->getBargainListById($promotion_id);
-        $stock = $this->handle->getBargainStock($list->promotion_id,$list->stock_id);
-//        $promotion = $this->handle->getBargainPromotion($promotion_id);
+//        $list = $this->handle->getBargainListById($promotion_id);
+//        $stock = $this->handle->getBargainStock($list->promotion_id,$list->stock_id);
+        $promotion = $this->handle->getBargainPromotion($promotion_id);
         return jsonResponse([
             'msg'=>'ok',
             'data'=>[
-                'price'=>sprintf('%.2f',$stock->origin_price-$price),
+                'price'=>sprintf('%.2f',$promotion->origin_price-$price),
                 'count'=>$count,
                 'bargain_price'=>sprintf('%.2f',$price)
             ]
