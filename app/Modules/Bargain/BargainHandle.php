@@ -14,6 +14,7 @@ use App\Modules\Bargain\Model\BargainPicture;
 use App\Modules\Bargain\Model\BargainPromotion;
 use App\Modules\Bargain\Model\BargainRecord;
 use App\Modules\Bargain\Model\BargainStock;
+use App\Modules\Product\Model\OfferList;
 use App\Modules\Product\Model\Product;
 use App\Modules\Product\Model\Stock;
 use App\Modules\Store\Model\StoreExpress;
@@ -38,7 +39,7 @@ trait BargainHandle
         }
         return false;
     }
-    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0,$name='')
+    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0,$name='',$hot=0)
     {
         $DB = DB::table('bargain_promotions');
         if (!empty($product_id)){
@@ -58,6 +59,10 @@ trait BargainHandle
         }
         if ($name&&strlen($name)!=0){
             $DB->where('description','like','%'.$name.'%')->orWhere('title','like','%'.$name.'%');
+        }
+        if ($hot){
+            $idArray = OfferList::orderBy('sort','DESC')->pluck('product_id')->toArray();
+            $DB->whereIn('id',$idArray);
         }
         $count = $DB->count();
         $data = $DB->orderBy('id','DESC')->limit($limit)->offset(($page-1)*$limit)->get();
