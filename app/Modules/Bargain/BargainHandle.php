@@ -62,7 +62,7 @@ trait BargainHandle
         }
         if ($hot){
             $idArray = OfferList::orderBy('sort','DESC')->pluck('product_id')->toArray();
-            $DB->whereIn('id',$idArray);
+            $DB->whereIn('id',$idArray)->orderBy('id','DESC');
         }
         $count = $DB->count();
         $data = $DB->orderBy('id','DESC')->limit($limit)->offset(($page-1)*$limit)->get();
