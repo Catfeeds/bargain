@@ -72,13 +72,16 @@ trait BargainHandle
             'data'=>$data
         ];
     }
-    public function formatBargainPromotions(&$promotions,$formatStock=0,$user_id=0)
+    public function formatBargainPromotions(&$promotions,$formatSort=0)
     {
         if (empty($promotions)){
             return [];
         }
         foreach ($promotions as $promotion){
             $promotion->pictures = $this->getBargainPictures($promotion->id);
+            if ($formatSort){
+                $promotion->sort = OfferList::where('product_id','=',$promotion->id)->first();
+            }
 //            $product = Product::find($promotion->product_id);
 //            if (!empty($product)){
 //                unset($product->detail);
