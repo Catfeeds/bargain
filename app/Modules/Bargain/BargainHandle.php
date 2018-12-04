@@ -82,6 +82,7 @@ trait BargainHandle
             if ($formatSort){
                 $sort = OfferList::where('product_id','=',$promotion->id)->first();
                 $promotion->sort = empty($sort)?0:$sort->sort;
+                $promotion->hot = empty($sort)?0:1;
             }
 //            $product = Product::find($promotion->product_id);
 //            if (!empty($product)){
