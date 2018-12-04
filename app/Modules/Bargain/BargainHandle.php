@@ -80,7 +80,8 @@ trait BargainHandle
         foreach ($promotions as $promotion){
             $promotion->pictures = $this->getBargainPictures($promotion->id);
             if ($formatSort){
-                $promotion->sort = OfferList::where('product_id','=',$promotion->id)->first();
+                $sort = OfferList::where('product_id','=',$promotion->id)->first();
+                $promotion->sort = empty($sort)?0:$sort->sort;
             }
 //            $product = Product::find($promotion->product_id);
 //            if (!empty($product)){
