@@ -38,7 +38,7 @@ trait BargainHandle
         }
         return false;
     }
-    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0)
+    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0,$name='')
     {
         $DB = DB::table('bargain_promotions');
         if (!empty($product_id)){
@@ -55,6 +55,9 @@ trait BargainHandle
         }
         if ($enable){
             $DB->where('enable','=',$enable-1);
+        }
+        if ($name&&strlen($name)!=0){
+            $DB->where('description','like','%'.$name.'%')->orWhere('title','like','%'.$name.'%');
         }
         $count = $DB->count();
         $data = $DB->orderBy('id','DESC')->limit($limit)->offset(($page-1)*$limit)->get();
