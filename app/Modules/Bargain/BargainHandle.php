@@ -194,7 +194,7 @@ trait BargainHandle
                 $promotion = $this->getBargainPromotion($record->promotion_id);
                 if (!empty($promotion)){
                     $record->promotion = $promotion;
-                    $record->pictures = $this->getBargainPictures($promotion->id);
+                    $record->clover = BargainPicture::where('bargain_id','=',$promotion->id)->first();
 //                    $record->stock = Stock::find($record->stock_id);
 //                    $record->product = Stock::find($promotion->product_id);
                 }else{
