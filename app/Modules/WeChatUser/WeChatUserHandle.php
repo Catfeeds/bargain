@@ -9,6 +9,7 @@ use App\Modules\Proxy\ProxyHandle;
 use App\Modules\SettleApply\SettleApplyHandle;
 use App\Modules\Store\Model\Store;
 use App\Modules\Store\Model\StoreUserBind;
+use App\Modules\Store\StoreHandle;
 use App\Modules\WeChatUser\Model\NotifyList;
 use App\Modules\WeChatUser\Model\ProductCollect;
 use App\Modules\WeChatUser\Model\UserAmount;
@@ -29,6 +30,7 @@ class WeChatUserHandle {
     use SettleApplyHandle;
     use ProxyHandle;
     use PrizeHandle;
+    use StoreHandle;
     //创建用户
     public function createUser($data)
     {
