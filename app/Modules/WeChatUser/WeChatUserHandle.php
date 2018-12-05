@@ -7,6 +7,7 @@ use App\Modules\Proxy\Model\ProxyList;
 use App\Modules\Proxy\Model\ProxyUser;
 use App\Modules\Proxy\ProxyHandle;
 use App\Modules\SettleApply\SettleApplyHandle;
+use App\Modules\Store\Model\StoreUserBind;
 use App\Modules\WeChatUser\Model\NotifyList;
 use App\Modules\WeChatUser\Model\ProductCollect;
 use App\Modules\WeChatUser\Model\UserAmount;
@@ -76,6 +77,13 @@ class WeChatUserHandle {
         }
         foreach ($users as $user){
             $user->info = UserInfo::where('user_id','=',$user->id)->first();
+            $bind = StoreUserBind::where('user_id','=',$user->id)->first();
+            if ($bind){
+                $user->bind = 1;
+                $user->bindStore = Store::find($bind->store_id)->name;
+            }else{
+                $user->bind = 0;
+            }
         }
     }
     //删除用户
