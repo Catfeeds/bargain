@@ -7,6 +7,7 @@ use App\Modules\Proxy\Model\ProxyList;
 use App\Modules\Proxy\Model\ProxyUser;
 use App\Modules\Proxy\ProxyHandle;
 use App\Modules\SettleApply\SettleApplyHandle;
+use App\Modules\Store\Model\Store;
 use App\Modules\Store\Model\StoreUserBind;
 use App\Modules\WeChatUser\Model\NotifyList;
 use App\Modules\WeChatUser\Model\ProductCollect;
