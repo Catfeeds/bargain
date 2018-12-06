@@ -178,4 +178,8 @@ Route::group(['prefix'=>'v3','middleware'=>'cross'],function (){
 
     Route::get('bind/user','V3\StoreController@bindUser');
     Route::get('unbind/user','V3\StoreController@unBindUser');
+    Route::post('city','V3\CityController@addCity');
+    Route::delete('city','V3\CityController@delCity');
+    Route::get('cities','V3\CityController@getCities');
+
 });
