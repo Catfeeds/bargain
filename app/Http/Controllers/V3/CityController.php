@@ -40,7 +40,7 @@ class CityController extends Controller
     }
     public function getCities()
     {
-        $name = Input::get('name');
+        $name = Input::get('name','');
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
         $data = $this->handle->getCities($page,$limit,$name);
