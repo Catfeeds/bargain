@@ -44,7 +44,8 @@ class CityController extends Controller
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
         $base = Input::get('base',false);
-        $data = $this->handle->getCities($page,$limit,$name,false,$base);
+        $parent_id = Input::get('parent_id',0);
+        $data = $this->handle->getCities($page,$limit,$name,false,$base,$parent_id);
         return jsonResponse([
             'msg'=>'ok',
             'data'=>$data
