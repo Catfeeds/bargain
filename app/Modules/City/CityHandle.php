@@ -50,7 +50,7 @@ trait CityHandle
             $db->where('parent_id','=',0);
         }
         if ($parent_id){
-            $db->where('parent_id','=',0);
+            $db->where('parent_id','=',$parent_id);
         }
         $db->limit($limit)->offset(($page-1)*$limit)->orderBy('id','DESC');
         $count = $db->count();
