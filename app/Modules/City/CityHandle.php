@@ -40,11 +40,14 @@ trait CityHandle
     {
         return City::find($id);
     }
-    public function getCities(int $page=1,int $limit=10,string $name='',bool $returnArray=false)
+    public function getCities(int $page=1,int $limit=10,string $name='',bool $returnArray=false,bool $base=false)
     {
         $db = DB::table('cities');
         if (strlen($name)!=0){
             $db->where('name','like','%'.$name.'%');
+        }
+        if ($base){
+            $db->where('parent_id','=',0);
         }
         $db->limit($limit)->offset(($page-1)*$limit)->orderBy('id','DESC');
         $count = $db->count();
