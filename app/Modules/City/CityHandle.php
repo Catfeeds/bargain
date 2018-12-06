@@ -47,7 +47,7 @@ trait CityHandle
             $db->where('name','like','%'.$name.'%');
         }
         $db->limit($limit)->offset(($page-1)*$limit)->orderBy('id','DESC');
-        $count = $returnArray->count();
+        $count = $db->count();
         $data = $returnArray?$db->get()->toArray():$db->get();
         return [
             'data'=>$data,
