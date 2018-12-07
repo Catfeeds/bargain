@@ -372,6 +372,7 @@ class OrderController extends Controller
         $type = Input::get('type');
         if ($type){
             $order_id = $this->handle->getOrdersIdByType($type);
+            dd($order_id);
         }else{
             $order_id = null;
         }
@@ -398,7 +399,7 @@ class OrderController extends Controller
         $type = Input::get('type');
         if (strlen($type)!=0){
             $ordersId = $this->handle->getOrdersIdByOrderType($type);
-            var_dump($ordersId);
+//            var_dump($ordersId);
             $idArray = $ordersId;
         }
 //        var_dump($idArray);
