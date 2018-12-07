@@ -372,7 +372,8 @@ class OrderController extends Controller
         $type = Input::get('type');
         if ($type){
             $order_id = $this->handle->getOrdersIdByType($type);
-            dd($order_id);
+            $order_id = count($order_id)==0?[0]:$order_id;
+//            dd($order_id);
         }else{
             $order_id = null;
         }
