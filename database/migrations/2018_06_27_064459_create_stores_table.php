@@ -18,6 +18,7 @@ class CreateStoresTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('manager');
+            $table->unsignedInteger('city_id')->default(0);
             $table->timestamps();
         });
     }

@@ -398,7 +398,7 @@ class OrderController extends Controller
         $type = Input::get('type');
         if (!empty($type)){
             $ordersId = $this->handle->getOrdersIdByOrderType($type);
-//            var_dump($ordersId);
+            var_dump($ordersId);
             $idArray = $ordersId;
         }
 //        var_dump($idArray);
