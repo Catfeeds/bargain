@@ -396,7 +396,7 @@ class OrderController extends Controller
             $idArray = array_merge($idArr, $idArray);
         }
         $type = Input::get('type');
-        if (!empty($type)){
+        if (strlen($type)!=0){
             $ordersId = $this->handle->getOrdersIdByOrderType($type);
             var_dump($ordersId);
             $idArray = $ordersId;
