@@ -150,12 +150,12 @@ class OrderController extends Controller
                 ];
                 $order_id = $this->handle->addOrder(0, $data);
                 if ($order_id) {
-//                    $addressSnapshot = [
-//                        'name' => $address->name,
-//                        'phone' => $address->phone,
-//                        'address' => $address->city . $address->address,
-//                        'zip_code' => $address->zip_code
-//                    ];
+                    $addressSnapshot = [
+                        'name' => $address->name,
+                        'phone' => $address->phone,
+                        'address' => $address->city . $address->address,
+                        'zip_code' => $address->zip_code
+                    ];
                     $orderType = [
                         'order_id'=>$order_id,
                         'type'=>'bargain',
@@ -185,6 +185,7 @@ class OrderController extends Controller
                         ];
                         $this->handle->addStockSnapshot($order_id, $stockData);
                         $this->handle->addCardPrize($user_id,$card_promotion);
+                        $this->handle->addAddressSnapshot($order_id, $addressSnapshot);
                     }
 //                    if ($this->handle->addAddressSnapshot($order_id, $addressSnapshot)) {
 //                        $swapStock = $this->handle->getStockById($stock->id);
