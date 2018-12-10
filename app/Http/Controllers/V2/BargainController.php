@@ -36,7 +36,9 @@ class BargainController extends Controller
             'title'=>$post->title,
             'intro'=>$post->intro,
             'origin_price'=>$post->origin_price,
-            'min_price'=>$post->min_price
+            'min_price'=>$post->min_price,
+            'bargain_num'=>$post->bargain_num?$post->bargain_num:0,
+            'read_num'=>$post->read_num?$post->read_num:0
         ];
 //        $stocks = $post->stocks;
         $pictures = $post->pictures;
@@ -244,6 +246,7 @@ class BargainController extends Controller
         $price = $this->handle->getBargainPrice($promotion->clickNum-$count,$promotion->origin_price-$promotion->min_price-$swapPrice);
         if ($this->handle->addBargainRecord($user_id,$promotion_id,$price)){
             $this->handle->addBargainCount($promotion_id,$count+1);
+            $this->handle->addBargainPromotion($promotion->id,['bargain_num'=>$promotion->bargain_num+1]);
             return jsonResponse([
                 'msg'=>'ok',
                 'data'=>[
