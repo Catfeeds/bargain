@@ -143,7 +143,7 @@ class BargainController extends Controller
         }
         if ($lat){
             $data = getAround($lat,$lon,10*1000);
-            $store_id = $this->handle->getStoresByGrid($data['minLat'],$data['maxLat'],$data['minLng'],$data['maxLng']);
+            $store_id = $this->handle->getStoresIdByGrid($data['minLat'],$data['maxLat'],$data['minLng'],$data['maxLng']);
 //            dd($store_id);
             $store_id = count($store_id)==0?[0]:$store_id;
         }
