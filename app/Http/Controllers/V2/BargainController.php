@@ -97,7 +97,7 @@ class BargainController extends Controller
         $state = Input::get('state',0);
         $page = Input::get('page',1);
         $limit = Input::get('limit',10);
-        $data = $this->handle->getBargainPromotions(null,0,$state,$page,$limit);
+        $data = $this->handle->getBargainPromotions(null,[],$state,$page,$limit);
         $this->handle->formatBargainPromotions($data['data'],1);
         return jsonResponse([
             'msg'=>'ok',
