@@ -39,14 +39,14 @@ trait BargainHandle
         }
         return false;
     }
-    public function getBargainPromotions($product_id=[],$store_id=0,$state=0,$page=1,$limit=10,$enable=0,$type_id=0,$name='',$hot=0)
+    public function getBargainPromotions($product_id=[],$store_id=[],$state=0,$page=1,$limit=10,$enable=0,$type_id=0,$name='',$hot=0)
     {
         $DB = DB::table('bargain_promotions');
         if (!empty($product_id)){
             $DB->whereIn('product_id',$product_id);
         }
-        if ($store_id){
-            $DB->where('store_id','=',$store_id);
+        if (count($store_id)!=0){
+            $DB->whereIn('store_id',$store_id);
         }
         if ($type_id){
             $DB->where('type_id','=',$type_id);

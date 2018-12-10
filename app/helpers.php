@@ -127,3 +127,31 @@ if (!function_exists('filterEmoji')){
         return $str;
     }
 }
+if (!function_exists('getAround')){
+    function getAround($lat,$lon,$radius){
+        $PI = 3.14159265;
+
+        $latitude = $lat;
+        $longitude = $lon;
+
+        $degree = (24901*1609)/360.0;
+        $radiusMile = $radius;
+
+        $dpmLat = 1/$degree;
+        $radiusLat = $dpmLat*$radiusMile;
+        $minLat = $latitude - $radiusLat;
+        $maxLat = $latitude + $radiusLat;
+
+        $mpdLng = $degree*cos($latitude * ($PI/180));
+        $dpmLng = 1 / $mpdLng;
+        $radiusLng = $dpmLng*$radiusMile;
+        $minLng = $longitude - $radiusLng;
+        $maxLng = $longitude + $radiusLng;
+        return [
+            'minLat'=>round($minLat,7),
+            'maxLat'=>round($maxLat,7),
+            'minLng'=>round($minLng,7),
+            'maxLng'=>round($maxLng,7),
+        ];
+    }
+}

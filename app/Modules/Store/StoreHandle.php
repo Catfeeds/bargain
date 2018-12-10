@@ -154,6 +154,16 @@ trait StoreHandle
         }
         return $db->pluck('id')->toArray();
     }
+    public function getStoresIdByCityId($city_id)
+    {
+        $id = Store::where('city_id','=',$city_id)->pluck('id')->toArray();
+        return $id;
+    }
+    public function getStoresIdByGrid($minLat,$minLon,$maxLat,$maxLon)
+    {
+        $db = Store::whereBetween('lat',[$minLat,$maxLat])->whereBetween('lon',[$minLon,$maxLon]);
+        return $db->pluck('id')->toArray();
+    }
 
     public function getStoresIdByStockId($idArray)
     {

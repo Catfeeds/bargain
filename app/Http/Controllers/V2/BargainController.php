@@ -133,7 +133,20 @@ class BargainController extends Controller
         $user_id = getRedisData(Input::get('token'));
         $hot = Input::get('hot',0);
         $name = Input::get('name');
-        $data = $this->handle->getBargainPromotions(null,0,0,$page,$limit,2,$type_id,$name,$hot);
+        $city_id = Input::get('city_id',0);
+        $lat = Input::get('lat');
+        $lon = Input::get('lon');
+        $store_id = [];
+        if ($city_id){
+            $store_id = $this->handle->getStoresIdByCityId($city_id);
+            $store_id = count($store_id)==0?[0]:$store_id;
+        }
+        if ($lat){
+            $data = getAround($lat,$lon,10*1000);
+            $store_id = $this->handle->getStoresByGrid($data['minLat'],$data['maxLat'],$data['minLng'],$data['maxLng']);
+            $store_id = count($store_id)==0?[0]:$store_id;
+        }
+        $data = $this->handle->getBargainPromotions(null,$store_id,0,$page,$limit,2,$type_id,$name,$hot);
         $this->handle->formatBargainPromotions($data['data']);
         return jsonResponse([
             'msg'=>'ok',
