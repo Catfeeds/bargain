@@ -144,6 +144,7 @@ class BargainController extends Controller
         if ($lat){
             $data = getAround($lat,$lon,10*1000);
             $store_id = $this->handle->getStoresByGrid($data['minLat'],$data['maxLat'],$data['minLng'],$data['maxLng']);
+            dd($store_id);
             $store_id = count($store_id)==0?[0]:$store_id;
         }
         $data = $this->handle->getBargainPromotions(null,$store_id,0,$page,$limit,2,$type_id,$name,$hot);
